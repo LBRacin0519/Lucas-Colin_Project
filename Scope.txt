@@ -1,0 +1,16 @@
+FLIP ADVISOR | P0 BASELINE | v0.1
+Private internal clothing resale tool for Lucas and Colin, not a public SaaS.
+Goal: increase realized resale profit and avoid poor purchases. No billing, customer accounts, advertising or public deployment.
+Phone: installable mobile-first progressive web app (PWA); not a native App Store binary.
+P0:
+- Up to four garment/tag photos, camera capture and listing notes; AI identification via configured vision model.
+- Show tag transcription, brand, garment, style code, size, material, condition clues, era uncertainty, inspection prompts. Human verifies identity and condition; AI cannot authenticate a garment.
+- Generate eBay sold/Product Research, Depop and Poshmark search links. Optional explicitly enabled billable web research provides cited leads, not verified sale data.
+- Manual comparable capture: actual sold item price excluding tax and shipping, date, source URL, target platform, and human match confirmation. Require 3 distinct URLs within 90 days. Asking prices, ambiguous accepted offers, duplicates, different platforms and older sales excluded. No unauthorized scraping.
+- Estimate conservative (25th percentile), median and optimistic (75th percentile) from eligible comps. Descriptive estimates, not confidence intervals or guarantees. No valuation when evidence is insufficient.
+- Deterministic USD calculations: sale + buyer-paid shipping - percentage fee on sale, buyer shipping and additional fee base - fixed fee - seller shipping - other selling costs - purchase - upfront costs. ROI = profit / (purchase + upfront costs), undefined for zero investment. Max offer is lower of conservative net proceeds minus minimum profit and conservative net proceeds divided by (1+minimum ROI), less upfront costs. Round down offer; round fees up. Defaults: $15 minimum profit and 50% ROI, editable; fee input required, no assumed fee schedule.
+- Investigate unless identity, inspection and costs confirmed and sufficient evidence. Conditional buy if conservative target met; otherwise negotiate or pass. User makes final purchase. No demand/sell-through prediction.
+Architecture: Node.js 22+ native HTTP, no dependencies, mobile UI, OpenAI Responses API on server. Loopback bind only, private HTTPS via Tailscale Serve and restricted tailnet access. Do not expose with Funnel or public hosting without authentication and review. API key in ignored .env, never frontend. Request validation, global in-memory AI rate limit, no persisted photos or comps. Provider retention terms apply; store:false is not a zero-retention guarantee.
+P1: persistent inventory, realized profit, platform fee profiles, CSV export, improved authenticity checks. P2: trends, authorized data integrations, sourcing recommendations.
+Acceptance: unit tests pass; live API identification and optional search verified with actual credentials; mobile home-screen installation and camera tested over private HTTPS; real clothing comps validated by founders. Until then P0 is an implementation candidate, not proven production ready.
+Change control: review feature branches together; update scope when assumptions change. Never commit credentials, private screenshots, sale records or personal data.
